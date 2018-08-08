@@ -1,94 +1,43 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="container">
     <h2>Essential Links</h2>
+
+    <p><input type="text" placeholder="Name"></p>
+    <p><input type="number" placeholder="Age"></p>
+    <p><input type="button" value="Add"></p>
+
     <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
+      <li v-for="item in users" :key="item.id">
+        [ID {{item.id}}]{{item.name}} <button>X</button> 
       </li>
     </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      urlAPI:'https://jsonplaceholder.typicode.com/users',
+      users:[],
+      user:{}
+    }
+  },
+  created(){
+    this.getUsers();
+  },
+  methods:{
+    getUsers(){
+      axios.get(this.urlAPI).then(response => {
+        this.users = response.data
+        console.log(this.users);
+      }).catch(err=>{
+        console.log(err);
+      })
     }
   }
 }
@@ -96,16 +45,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.container{
+  max-width: 600px;
+  margin: 10px auto;
+}
 h1, h2 {
   font-weight: normal;
 }
 ul {
   list-style-type: none;
   padding: 0;
+  text-align: left;
 }
 li {
-  display: inline-block;
-  margin: 0 10px;
+  margin: 10px 0;
 }
 a {
   color: #42b983;

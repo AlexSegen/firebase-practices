@@ -17,7 +17,7 @@
       <hr>
     <ul>
       <li v-for="(item,index) in users" :key="item.id">
-        [ID {{item.id}}]{{item.name}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
+        [ID:{{item.id}}] {{item.name}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
       </li>
     </ul>
 
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
-      urlAPI: "https://jsonplaceholder.typicode.com/users",
+      urlAPI: "http://localhost:3000/users",
       users: [],
       user: {
         name: "",
@@ -84,6 +84,7 @@ export default {
     updateUser(id) {
       axios.put(this.urlAPI + "/" + id, this.user).then(response => {
         this.user = "";
+        this.editMode = false;
         this.getUsers();
       });
     }

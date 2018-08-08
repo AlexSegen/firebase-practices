@@ -4,12 +4,14 @@
 
 
     <div>
-      <p><input type="text" v-model="text"/><button @click="addTodo()">Add</button></p>
+      <p><input type="text" v-model="text"/></p>
+      <p><input type="text" v-model="text2"/></p>
+      <p><button @click="addTodo()">Add</button></p>
       <p v-if="empty">Campo requerido</p>
       
       <ul>
         <li v-for="(todo,index) in todos">
-          <p>{{ index }} {{ todo }} <button type="button" @click="removeTodo(index)">X</button></p>
+          <p>{{ index }} | {{ todo.text }} y {{todo.text2}} <button type="button" @click="removeTodo(index)">X</button></p>
         </li>
       </ul>
     </div>
@@ -25,8 +27,13 @@ export default {
     return {
       msg: "Welcome to Your Vue.js App",
       text: null,
+      text2:null,
       todos: [],
-      empty:false
+      empty:false,
+      /* todo:{
+        'text':'',
+        'text2':''
+      } */
     };
   },
   mounted() {
@@ -37,7 +44,7 @@ export default {
   },
   methods: {
     addTodo() {
-      if(this.text == ''){
+     /*  if(this.text == ''){
         this.empty = true;
       }else if(this.text == null){
         this.empty = true;
@@ -46,7 +53,15 @@ export default {
         this.todos.push(this.text);
         this.text = null;
         this.$localStorage.set("todos", JSON.stringify(this.todos));
-      }
+      } */
+
+        this.todos.push({
+          text: this.text,
+          text2: this.text2
+        });
+        this.text = '';
+        this.text2 = '';
+        this.$localStorage.set("todos", JSON.stringify(this.todos));
 
     },
     removeTodo(index){

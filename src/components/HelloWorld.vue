@@ -8,7 +8,7 @@
 
     <ul>
       <li v-for="item in users" :key="item.id">
-        [ID {{item.id}}]{{item.name}} <button>X</button> 
+        [ID {{item.id}}]{{item.name}} <button @click="deleteUser(item.id)">X</button> 
       </li>
     </ul>
 
@@ -34,7 +34,14 @@ export default {
     getUsers(){
       axios.get(this.urlAPI).then(response => {
         this.users = response.data
-        console.log(this.users);
+        //console.log(this.users);
+      }).catch(err=>{
+        console.log(err);
+      })
+    },
+    deleteUser(id){
+      axios.delete(this.urlAPI+'/'+id).then(response=>{
+        console.log('Registro eliminado');
       }).catch(err=>{
         console.log(err);
       })

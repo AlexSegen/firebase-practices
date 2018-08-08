@@ -16,8 +16,8 @@
       
       <hr>
     <ul>
-      <li v-for="item in users" :key="item.id">
-        [ID {{item.id}}]{{item.name}} <button @click="deleteUser(item.id)">X</button> <button @click="editUser(item)">Edit</button>
+      <li v-for="(item,index) in users" :key="item.id">
+        [ID {{item.id}}]{{item.name}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
       </li>
     </ul>
 
@@ -66,26 +66,26 @@ export default {
           console.log(err);
         });
     },
-    deleteUser(id) {
+    deleteUser(id,index) {
       axios
         .delete(this.urlAPI + "/" + id)
         .then(response => {
-          console.log("Registro eliminado");
+          this.users.splice(index, 1);
+          //console.log("Registro eliminado");
         })
         .catch(err => {
           console.log(err);
         });
     },
-    editUser(item){
+    editUser(item) {
       this.editMode = true;
       this.user = item;
     },
-    updateUser(id){
-      axios.put(this.urlAPI + '/' + id, this.user)
-      .then(response => {
+    updateUser(id) {
+      axios.put(this.urlAPI + "/" + id, this.user).then(response => {
         this.user = "";
         this.getUsers();
-      })
+      });
     }
   }
 };

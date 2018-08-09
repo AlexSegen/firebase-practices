@@ -1,32 +1,32 @@
 <template>
 <div class="container">
-    <h1>Fruits</h1>
-    <p>{{ currentUser.email }}</p>
+    <h1>Users</h1>
+    <p>{{ currentUser.email }} || {{ currentUser.uid }}</p>
     <p class="link" @click="showForm">Add new</p>
-    <div class="form-area" v-if="fruitForm">
-        <form @submit.prevent="addFruit">
+    <div class="form-area" v-if="userForm">
+        <form @submit.prevent="addUser">
             <label for="name">
-                <input type="text" id="name" v-model="fruit.name" placeholder="Name">
+                <input type="text" id="name" v-model="user.name" placeholder="Name">
             </label>
-            <label for="price">
-                <input type="number" id="price" v-model="fruit.price" placeholder="Price">
+            <label for="email">
+                <input type="email" id="email" v-model="user.email" placeholder="Email">
             </label>
             <br>
-            <button type="submit" class="btn">Save</button> <button @click="fruitForm = false" type="button"  class="btn">Cancel</button>
+            <button type="submit" class="btn">Save</button> <button @click="userForm = false" type="button"  class="btn">Cancel</button>
         </form>
     </div>
-    <div v-if="fruits.length < 1">
+    <div v-if="users.length < 1">
     No hay registros
     </div>
 
     <ol v-else class="MyList">
-        <li v-for="fruit of fruits">
-            <div v-if="fruit.edit" class="inline-edit">
-                <input type="text" placeholder="Name" v-model="fruit.name"> <input type="number" placeholder="Price" v-model="fruit.price">
-                <input type="button" value="Update" class="save" @click="updatefruit(fruit)"> <input type="button" value="Cancel" class="cancel" @click="noEditMode(fruit)">
+        <li v-for="user of users">
+            <div v-if="user.edit" class="inline-edit">
+                <input type="text" placeholder="Name" v-model="user.name"> <input type="email" placeholder="Email" v-model="user.email">
+                <input type="button" value="Update" class="save" @click="updateUser(user)"> <input type="button" value="Cancel" class="cancel" @click="noEditMode(user)">
             </div>
-            <div v-else class="fruit-details">
-                {{fruit.name}}, CPL {{fruit.price}} | <button class="delete" @click="deletefruit(fruit)">X</button> <button class="edit" @click="editMode(fruit)">Edit</button>
+            <div v-else class="user-details">
+                {{user.name}} | <a :href="'mailto:'+user.email">{{user.email}}</a> | <button class="delete" @click="deleteUser(user)">X</button> <button class="edit" @click="editMode(user)">Edit</button>
             </div>
         </li>
     </ol>
@@ -39,59 +39,73 @@
 import firebase from 'firebase'
 import { db } from "@/firebase";
 
+let collection = 'users';
+
 export default {
   data() {
     return {
       currentUser: firebase.auth().currentUser,
-      fruits: {},
-      fruit: { name: "", price: "", edit: null || false },
-      fruitForm: false
+      users: {},
+      user: { name: "", email: "", edit: null || false },
+      userForm: false
     };
   },
+  created(){
+    this.$bindAsArray(collection, db.ref(`/${collection}/${this.currentUser.uid}`));
+  },
   firebase: {
-    fruits: {
-      source: db.ref("fruits"),
-      // Optional, allows you to handle any errors.
+       users: db.ref(collection)
+/*     users: {
+      source: db.ref(utoken + "/users"),
       cancelCallback(err) {
         console.error(err);
       }
-    }
+    } */
   },
   methods: {
     showForm() {
-      this.fruitForm = true;
+      this.userForm = true;
     },
-    addFruit() {
-      this.$firebaseRefs.fruits
-        .push({
-          name: this.fruit.name,
-          price: this.fruit.price,
-          edit: this.fruit.edit
+    addUser() {
+
+        db.ref(collection).child(this.currentUser.uid).push(this.user)
+           .then(
+            (this.user.name = ""),
+            (this.user.email = ""),
+            (this.user.edit = false),
+            (this.userForm = false)
+           );
+
+/*       this.$firebaseRefs.users
+      .push({
+          name: this.user.name,
+          email: this.user.email,
+          edit: this.user.edit
         })
         .then(
-          (this.fruit.name = ""),
-          (this.fruit.price = ""),
-          (this.fruit.edit = false),
-          (this.fruitForm = false)
-        );
+          (this.user.name = ""),
+          (this.user.email = ""),
+          (this.user.edit = false),
+          (this.userForm = false)
+        ); */
     },
-    editMode(fruit){
-        this.$firebaseRefs.fruits.child(fruit['.key']).child('edit').set(true);
+    editMode(user){
+        this.$firebaseRefs.users.child(user['.key']).child('edit').set(true);
     },
-    noEditMode(fruit){
-        this.$firebaseRefs.fruits.child(fruit['.key']).child('edit').set(false);
+    noEditMode(user){
+        this.$firebaseRefs.users.child(user['.key']).child('edit').set(false);
     },
-    updatefruit(fruit){
-        const copy = {...fruit}
-        // remove the .key attribute
+    updateUser(user){
+        const copy = {...user}
+
         delete copy['.key']
         
-        this.$firebaseRefs.fruits.child(fruit['.key']).set(copy)
+        this.$firebaseRefs.users.child(user['.key']).set(copy)
         
-        this.$firebaseRefs.fruits.child(fruit['.key']).child('edit').set(false);
+        this.$firebaseRefs.users.child(user['.key']).child('edit').set(false);
     },
-    deletefruit(fruit) {
-      this.$firebaseRefs.fruits.child(fruit[".key"]).remove();
+    deleteUser(user) {
+      this.$firebaseRefs.users.child(user[".key"]).remove();
     }
   }
 };
@@ -146,9 +160,9 @@ a {
   cursor: pointer;
 }
 
-.inline-edit {
-  input {
-    margin-right: 5px;
-  }
+.inline-edit{
+    input{
+        margin-right: 5px;
+    }
 }
 </style>

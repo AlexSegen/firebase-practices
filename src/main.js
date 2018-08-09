@@ -3,13 +3,29 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import firebase from 'firebase'
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
+let app;
+let config = {
+  apiKey: "AIzaSyDKNCegy6VrA8NimiE2uDw_kVbS8-ZHXoU",
+  authDomain: "myvuefirebaseauth.firebaseapp.com",
+  databaseURL: "https://myvuefirebaseauth.firebaseio.com",
+  projectId: "myvuefirebaseauth",
+  storageBucket: "myvuefirebaseauth.appspot.com",
+  messagingSenderId: "651868466325"
+};
+
+firebase.initializeApp(config)
+firebase.auth().onAuthStateChanged(function(user) {
+  if (!app) {
+    /* eslint-disable no-new */
+    app = new Vue({
+      el: '#app',
+      template: '<App/>',
+      components: { App },
+      router
+    })
+  }
+});

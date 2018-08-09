@@ -43,9 +43,9 @@ let router = new Router({
       path: '/fruits',
       name: 'Fruits',
       component: Fruits,
-/*       meta: {
+      meta: {
         requiresAuth: true
-      } */
+      }
     }
   ]
 })

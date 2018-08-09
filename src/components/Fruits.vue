@@ -1,6 +1,7 @@
 <template>
 <div class="container">
     <h1>Fruits</h1>
+    <p>{{ currentUser.email }}</p>
     <p class="link" @click="showForm">Add new</p>
     <div class="form-area" v-if="fruitForm">
         <form @submit.prevent="addFruit">
@@ -35,12 +36,13 @@
 
 </template>
 <script>
-//import firebase from 'firebase'
+import firebase from 'firebase'
 import { db } from "@/firebase";
 
 export default {
   data() {
     return {
+      currentUser: firebase.auth().currentUser,
       fruits: {},
       fruit: { name: "", price: "", edit: null || false },
       fruitForm: false
@@ -144,9 +146,9 @@ a {
   cursor: pointer;
 }
 
-.inline-edit{
-    input{
-        margin-right: 5px;
-    }
+.inline-edit {
+  input {
+    margin-right: 5px;
+  }
 }
 </style>

@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Hello from '@/components/Hello'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
+
+import Hello from '@/components/Hello'
+import Fruits from '@/components/Fruits'
+
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -35,6 +38,14 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/fruits',
+      name: 'Fruits',
+      component: Fruits,
+/*       meta: {
+        requiresAuth: true
+      } */
     }
   ]
 })

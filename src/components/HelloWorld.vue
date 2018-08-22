@@ -9,13 +9,14 @@
             <div v-if="editMode" class="editform">
                 <p><input type="text" placeholder="Name"  v-model="user.name"></p>
                 <p><input type="email" placeholder="Email" v-model="user.email"></p>
-                <p><input class="btn btn-sm btn-info" type="button" value="Update" @click="updateUser(user.id)"> <input type="button" value="Cancel" @click="editMode = false"></p>
+                <p><button class="btn btn-sm btn-info" type="button" value="Update" @click="updateUser(user.id)"><i class="icon-refresh icons"></i> Update</button> 
+                <input class="btn btn-link btn-sm" type="button" value="Cancel" @click="editMode = false"></p>
             </div>
 
             <div v-else class="addform">
                 <p><input type="text" placeholder="Name"  v-model="user.name"></p>
                 <p><input type="email" placeholder="Email" v-model="user.email"></p>
-                <p><input class="btn btn-sm btn-success" type="button" value="Add" @click="addUser()"></p>
+                <p><button class="btn btn-sm btn-success" type="button" @click="addUser()"><i class="icon-plus icons"></i> Add</button></p>
             </div>
           </div>
         </div>
@@ -26,7 +27,7 @@
             <img class="mr-3" :src="item.photo" width="64" height="64" :alt="item.name">
             <div class="media-body">
               <h5 class="mt-0 mb-1">{{item.name}}</h5>
-              {{item.email}} <button class="btn btn-link btn-sm text-danger" @click="deleteUser(item.id,index)">X</button> <button class="btn btn-link btn-sm" @click="editUser(item)"><i class="icon-note icons"></i></button>
+               <i class="icon-envelope icons"></i> {{item.email}} <button class="btn btn-link btn-sm text-danger" @click="deleteUser(item.id,index)"><i class="icon-trash icons"></i></button> <button class="btn btn-link btn-sm" @click="editUser(item)"><i class="icon-pencil icons"></i></button>
             </div>
           </li>
         </ul>

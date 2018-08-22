@@ -15,11 +15,15 @@
       </div>
       
       <hr>
-    <ul>
-      <li v-for="(item,index) in users" :key="item.id">
-        [ID:{{item.id}}] {{item.name}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
-      </li>
-    </ul>
+      <ul class="list-unstyled">
+        <li class="media" v-for="(item,index) in users" :key="item.id">
+          <img class="mr-3" :src="item.photo" width="64" height="64" :alt="item.name">
+          <div class="media-body">
+            <h5 class="mt-0 mb-1">{{item.name}}</h5>
+            {{item.email}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
+          </div>
+        </li>
+      </ul>
 
   </div>
 </template>

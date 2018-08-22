@@ -33,8 +33,9 @@
         </ul>
       </div>
       <div class="div col-md-4 text-left">
+        <h5>JSON</h5>
         <pre style="opacity:.7">
-          {{this.users}}
+          {{this.users[0]}}
         </pre>
       </div>
     </div>

@@ -167,7 +167,7 @@
     },
     {
       "id": 12,
-      "name": "斎藤",
+      "name": "Dana Torseka",
       "surname": "美穂",
       "gender": "female",
       "region": "Japan",
@@ -175,7 +175,7 @@
       "title": "ms",
       "phone": "(338) 262 1333",
       "birthday": "12/12/1992|12/12/1992|724216485",
-      "email": "斎藤-92@example.com",
+      "email": "dtorseka@example.com",
       "password": "美穂92&",
       "credit_card": "11/21|5713-9916-2980-3409|3309|934",
       "photo": "https://uinames.com/api/photos/female/2.jpg"
@@ -749,6 +749,12 @@
       "password": "Burtea94!&",
       "credit_card": "8/21|4827-5592-6301-6625|3498|174",
       "photo": "https://uinames.com/api/photos/female/25.jpg"
+    },
+    {
+      "name": "Dani Escalante",
+      "email": "dani@mail.com",
+      "photo": "http://airlinecycles.com/wp-content/uploads/2017/12/default_bio_600x600.jpg",
+      "id": 51
     }
   ]
 }

@@ -1,30 +1,37 @@
 <template>
   <div class="container">
-    <h2>Essential Links</h2>
+    <h2>Usuarios</h2>  
+    <hr>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card"  style="position: sticky;top:50px;">
+          <div class="card-body">
+            <div v-if="editMode" class="editform">
+                <p><input type="text" placeholder="Name"  v-model="user.name"></p>
+                <p><input type="email" placeholder="Email" v-model="user.email"></p>
+                <p><input type="button" value="Update" @click="updateUser(user.id)"> <input type="button" value="Cancel" @click="editMode = false"></p>
+            </div>
 
-      <div v-if="editMode" class="editform">
-          <p><input type="text" placeholder="Name"  v-model="user.name"></p>
-          <p><input type="email" placeholder="Email" v-model="user.email"></p>
-          <p><input type="button" value="Update" @click="updateUser(user.id)"> <input type="button" value="Cancel" @click="editMode = false"></p>
-      </div>
-
-      <div v-else class="addform">
-          <p><input type="text" placeholder="Name"  v-model="user.name"></p>
-          <p><input type="email" placeholder="Email" v-model="user.email"></p>
-          <p><input type="button" value="Add" @click="addUser()"></p>
-      </div>
-      
-      <hr>
-      <ul class="list-unstyled">
-        <li class="media" v-for="(item,index) in users" :key="item.id">
-          <img class="mr-3" :src="item.photo" width="64" height="64" :alt="item.name">
-          <div class="media-body">
-            <h5 class="mt-0 mb-1">{{item.name}}</h5>
-            {{item.email}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
+            <div v-else class="addform">
+                <p><input type="text" placeholder="Name"  v-model="user.name"></p>
+                <p><input type="email" placeholder="Email" v-model="user.email"></p>
+                <p><input type="button" value="Add" @click="addUser()"></p>
+            </div>
           </div>
-        </li>
-      </ul>
-
+        </div>
+      </div>
+      <div class="div col-md-4">
+        <ul class="list-unstyled">
+          <li class="media" v-for="(item,index) in users" :key="item.id">
+            <img class="mr-3" :src="item.photo" width="64" height="64" :alt="item.name">
+            <div class="media-body">
+              <h5 class="mt-0 mb-1">{{item.name}}</h5>
+              {{item.email}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,7 +46,8 @@ export default {
       users: [],
       user: {
         name: "",
-        email: ""
+        email: "",
+        photo:"" || 'http://airlinecycles.com/wp-content/uploads/2017/12/default_bio_600x600.jpg'
       },
       editMode: false
     };
@@ -98,10 +106,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.container {
-  max-width: 600px;
-  margin: 10px auto;
-}
 h1,
 h2 {
   font-weight: normal;

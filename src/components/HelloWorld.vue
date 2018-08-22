@@ -9,24 +9,24 @@
             <div v-if="editMode" class="editform">
                 <p><input type="text" placeholder="Name"  v-model="user.name"></p>
                 <p><input type="email" placeholder="Email" v-model="user.email"></p>
-                <p><input type="button" value="Update" @click="updateUser(user.id)"> <input type="button" value="Cancel" @click="editMode = false"></p>
+                <p><input class="btn btn-sm btn-info" type="button" value="Update" @click="updateUser(user.id)"> <input type="button" value="Cancel" @click="editMode = false"></p>
             </div>
 
             <div v-else class="addform">
                 <p><input type="text" placeholder="Name"  v-model="user.name"></p>
                 <p><input type="email" placeholder="Email" v-model="user.email"></p>
-                <p><input type="button" value="Add" @click="addUser()"></p>
+                <p><input class="btn btn-sm btn-success" type="button" value="Add" @click="addUser()"></p>
             </div>
           </div>
         </div>
       </div>
-      <div class="div col-md-4">
+      <div class="div col-md-5">
         <ul class="list-unstyled">
           <li class="media" v-for="(item,index) in users" :key="item.id">
             <img class="mr-3" :src="item.photo" width="64" height="64" :alt="item.name">
             <div class="media-body">
               <h5 class="mt-0 mb-1">{{item.name}}</h5>
-              {{item.email}} <button @click="deleteUser(item.id,index)">X</button> <button @click="editUser(item)">Edit</button>
+              {{item.email}} <button class="btn btn-link btn-sm text-danger" @click="deleteUser(item.id,index)">X</button> <button class="btn btn-link btn-sm" @click="editUser(item)"><i class="icon-note icons"></i></button>
             </div>
           </li>
         </ul>
@@ -79,15 +79,17 @@ export default {
         });
     },
     deleteUser(id,index) {
-      axios
-        .delete(this.urlAPI + "/" + id)
-        .then(response => {
-          this.users.splice(index, 1);
-          //console.log("Registro eliminado");
-        })
-        .catch(err => {
-          console.log(err);
-        });
+
+if(confirm('Are you sure?')){
+      axios.delete(this.urlAPI + "/" + id)
+      .then(response => {
+        this.users.splice(index, 1);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+
     },
     editUser(item) {
       this.editMode = true;

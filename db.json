@@ -17,7 +17,7 @@
     },
     {
       "id": 2,
-      "name": "Μητρόδωρος",
+      "name": "Gustav Saschenko",
       "surname": "Σπηλιωτόπουλος",
       "gender": "male",
       "region": "Greece",
@@ -25,7 +25,7 @@
       "title": "mr",
       "phone": "(948) 255 6676",
       "birthday": "01/01/1984|01/01/1984|441781682",
-      "email": "Μητρόδωρος84@example.com",
+      "email": "Saschenko84@example.com",
       "password": "Σπηλιωτόπουλος84_+",
       "credit_card": "1/20|3944-4472-4898-8402|8431|740",
       "photo": "https://uinames.com/api/photos/male/14.jpg"
@@ -749,12 +749,6 @@
       "password": "Burtea94!&",
       "credit_card": "8/21|4827-5592-6301-6625|3498|174",
       "photo": "https://uinames.com/api/photos/female/25.jpg"
-    },
-    {
-      "name": "Dani Escalante",
-      "email": "dani@mail.com",
-      "photo": "http://airlinecycles.com/wp-content/uploads/2017/12/default_bio_600x600.jpg",
-      "id": 51
     }
   ]
 }

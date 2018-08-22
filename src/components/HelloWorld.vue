@@ -31,6 +31,11 @@
           </li>
         </ul>
       </div>
+      <div class="div col-md-4 text-left">
+        <pre style="opacity:.7">
+          {{this.users}}
+        </pre>
+      </div>
     </div>
   </div>
 </template>
@@ -57,8 +62,10 @@ export default {
   },
   methods: {
     addUser() {
-      axios
-        .post(this.urlAPI, this.user)
+      if(this.user.name =='' || this.user.email == ''){
+        alert('Fill all fields');
+      }else{
+      axios.post(this.urlAPI, this.user)
         .then(response => {
           this.user = "";
           this.getUsers();
@@ -66,21 +73,21 @@ export default {
         .catch(err => {
           console.log(err);
         });
+      }
     },
     getUsers() {
-      axios
-        .get(this.urlAPI)
-        .then(response => {
-          this.users = response.data;
-          //console.log(this.users);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      axios.get(this.urlAPI)
+      .then(response => {
+        this.users = response.data;
+        //console.log(this.users);
+      })
+      .catch(err => {
+        console.log(err);
+      });     
     },
     deleteUser(id,index) {
 
-if(confirm('Are you sure?')){
+    if(confirm('Are you sure?')){
       axios.delete(this.urlAPI + "/" + id)
       .then(response => {
         this.users.splice(index, 1);
@@ -96,11 +103,15 @@ if(confirm('Are you sure?')){
       this.user = item;
     },
     updateUser(id) {
-      axios.put(this.urlAPI + "/" + id, this.user).then(response => {
-        this.user = "";
-        this.editMode = false;
-        this.getUsers();
-      });
+      if(this.user.name =='' || this.user.email == ''){
+        alert('Fill all fields');
+      }else{
+        axios.put(this.urlAPI + "/" + id, this.user).then(response => {
+          this.user = "";
+          this.editMode = false;
+          this.getUsers();
+        });
+      }
     }
   }
 };

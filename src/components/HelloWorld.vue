@@ -9,11 +9,20 @@
             <div v-if="editMode" class="editform">
                 <p><input type="text" placeholder="Name"  v-model="user.name"></p>
                 <p><input type="email" placeholder="Email" v-model="user.email"></p>
+                <p><input type="file" placeholder="Photo"></p>
                 <p><button class="btn btn-sm btn-info" type="button" value="Update" @click="updateUser(user.id)"><i class="icon-refresh icons"></i> Update</button> 
                 <input class="btn btn-link btn-sm" type="button" value="Cancel" @click="editMode = false"></p>
             </div>
 
             <div v-else class="addform">
+
+                 <p>Select an image</p>
+                 
+                <file-base64
+                  v-bind:multiple="true"
+                  v-bind:done="getFiles">
+                </file-base64>
+
                 <p><input type="text" placeholder="Name"  v-model="user.name"></p>
                 <p><input type="email" placeholder="Email" v-model="user.email"></p>
                 <p><button class="btn btn-sm btn-success" type="button" @click="addUser()"><i class="icon-plus icons"></i> Add</button></p>
@@ -44,8 +53,11 @@
 
 <script>
 import axios from "axios";
+import fileBase64 from 'vue-file-base64'
+
 export default {
   name: "HelloWorld",
+  components: { fileBase64 },
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
@@ -80,7 +92,7 @@ export default {
     getUsers() {
       axios.get(this.urlAPI)
       .then(response => {
-        this.users = response.data;
+        this.users = response.data.reverse();
         //console.log(this.users);
       })
       .catch(err => {
@@ -114,6 +126,10 @@ export default {
           this.getUsers();
         });
       }
+    },
+    getFiles(files){
+        this.user.photo = files[0].base64;
+        console.log(this.user.photo)
     }
   }
 };
